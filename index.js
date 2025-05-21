@@ -1,6 +1,7 @@
 import express from 'express'
 import mysql from 'mysql2/promise'
 import dotenv from 'dotenv'
+import { version } from 'react'
 
 dotenv.config()
 
@@ -17,7 +18,12 @@ const pool = mysql.createPool({
 app.get('/', async (req, res) => {
     try {
         const [rows] = await pool.query('SELECT title, description FROM blogs')
-        res.render('index', { blogs: rows })
+        res.render('index', {
+            blogs: rows,
+            version: 'v1',
+            host: process.env.NODE_HOST || 'unknown'
+
+        })
     } catch (error) {
         console.error(error)
         res.status(500).send('Error retrieving blog posts')
