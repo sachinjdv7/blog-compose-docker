@@ -17,9 +17,7 @@ services:
         
 
     blog-server:
-        build: 
-            dockerfile: Dockerfile
-            context: './'
+        image: sachinjdv7/blog-app:v1
         ports:
             - "3000:3000"
         env_file:
