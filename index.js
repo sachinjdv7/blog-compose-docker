@@ -24,6 +24,11 @@ app.get('/', async (req, res) => {
     }
 })
 
+app.get('/health', (req, res) => {
+    console.log('Checking health through endpoint...')
+    return res.json({ alive: true })
+})
+
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`)
