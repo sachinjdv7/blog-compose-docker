@@ -1,0 +1,38 @@
+name: blog
+
+services:
+
+    blog-db:
+        image: 'mysql'
+        environment:
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        volumes:
+            - blog-app-store:/var/lib/mysql
+        ports:
+            - '3306:3306'
+        networks:
+            - blog-app-net
+        
+         
+        
+
+    blog-server:
+        build: 
+            dockerfile: Dockerfile
+            context: './'
+        ports:
+            - "3000:3000"
+        env_file:
+            - ./.env
+        volumes:
+            - ./:/app
+        depends_on:
+            - blog-db
+        networks:
+            - blog-app-net
+
+
+volumes:
+    blog-app-store:
+networks:
+    blog-app-net:
